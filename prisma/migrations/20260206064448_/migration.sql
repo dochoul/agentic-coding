@@ -4,6 +4,7 @@ CREATE TABLE "users" (
     "name" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "age" TEXT,
     "phone" TEXT,
     "website" TEXT,
     "street" TEXT,

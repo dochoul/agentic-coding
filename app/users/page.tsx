@@ -12,6 +12,7 @@ export default function UsersPage() {
     name: '',
     username: '',
     email: '',
+    age: '',
     phone: '',
     website: '',
     companyName: '',
@@ -29,8 +30,8 @@ export default function UsersPage() {
     createUserMutation.mutate(newUser, {
       onSuccess: () => {
         setShowCreateForm(false);
-        setNewUser({ name: '', username: '', email: '', phone: '', website: '', companyName: '', companyCatchPhrase: '' });
-        alert('사용자가 생성되었습니다! (시뮬레이션)');
+        setNewUser({ name: '', username: '', email: '', age: '', phone: '', website: '', companyName: '', companyCatchPhrase: '' });
+        alert('사용자가 생성되었습니다!');
       },
       onError: () => {
         alert('사용자 생성에 실패했습니다.');
@@ -154,6 +155,18 @@ export default function UsersPage() {
                 type="text"
                 value={newUser.companyName}
                 onChange={(e) => setNewUser({ ...newUser, companyName: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                나이
+              </label>
+              <input
+                type="text"
+                value={newUser.age}
+                onChange={(e) => setNewUser({ ...newUser, age: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>

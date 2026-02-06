@@ -121,6 +121,9 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               
               <h3 className="text-sm font-semibold text-gray-500 mb-1">사용자명</h3>
               <p className="text-lg text-gray-900 mb-4">@{user.username}</p>
+
+              <h3 className="text-sm font-semibold text-gray-500 mb-1">나이</h3>
+              <p className="text-lg text-gray-900 mb-4">{user.age}</p>
               
               <h3 className="text-sm font-semibold text-gray-500 mb-1">이메일</h3>
               <p className="text-lg text-gray-900 mb-4">{user.email}</p>
@@ -159,7 +162,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
                 type="text"
                 value={editedUser.name || ''}
                 onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
             
@@ -169,7 +172,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
                 type="text"
                 value={editedUser.username || ''}
                 onChange={(e) => setEditedUser({ ...editedUser, username: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
             
@@ -179,7 +182,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
                 type="email"
                 value={editedUser.email || ''}
                 onChange={(e) => setEditedUser({ ...editedUser, email: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
             
@@ -189,7 +192,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
                 type="tel"
                 value={editedUser.phone || ''}
                 onChange={(e) => setEditedUser({ ...editedUser, phone: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
             

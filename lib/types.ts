@@ -3,6 +3,7 @@ export interface User {
   name: string;
   username: string;
   email: string;
+  age: string | null;
   phone: string | null;
   website: string | null;
   street: string | null;
@@ -38,6 +39,7 @@ export interface CreateUserInput {
   name: string;
   username: string;
   email: string;
+  age?: string;
   phone?: string;
   website?: string;
   street?: string;

@@ -135,6 +135,7 @@ model User {
   name               String
   username           String   @unique
   email              String   @unique
+  age                String?
   phone              String?
   website            String?
   street             String?
