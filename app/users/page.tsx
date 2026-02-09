@@ -1,23 +1,25 @@
 'use client';
 
 import { useState } from 'react';
-import { User } from '@/lib/types';
+import { User, CreateUserInput } from '@/lib/types';
 import UserCard from '@/components/UserCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { useUsers, useCreateUser, useDeleteUser } from '@/lib/hooks';
 
+const EMPTY_CREATE_USER: CreateUserInput = {
+  name: '',
+  username: '',
+  email: '',
+  age: '',
+  phone: '',
+  website: '',
+  companyName: '',
+  companyCatchPhrase: '',
+};
+
 export default function UsersPage() {
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [newUser, setNewUser] = useState({
-    name: '',
-    username: '',
-    email: '',
-    age: '',
-    phone: '',
-    website: '',
-    companyName: '',
-    companyCatchPhrase: '',
-  });
+  const [newUser, setNewUser] = useState<CreateUserInput>(EMPTY_CREATE_USER);
 
   // React Query 훅 사용
   const { data: users, isLoading, error } = useUsers();
@@ -30,7 +32,7 @@ export default function UsersPage() {
     createUserMutation.mutate(newUser, {
       onSuccess: () => {
         setShowCreateForm(false);
-        setNewUser({ name: '', username: '', email: '', age: '', phone: '', website: '', companyName: '', companyCatchPhrase: '' });
+        setNewUser(EMPTY_CREATE_USER);
         alert('사용자가 생성되었습니다!');
       },
       onError: () => {

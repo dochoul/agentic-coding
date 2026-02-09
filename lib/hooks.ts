@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { User, Post } from './types';
+import { User, Post, CreateUserInput, UpdateUserInput } from './types';
 import * as api from './api';
 
 // Query Keys
@@ -41,7 +41,7 @@ export function useCreateUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (userData: Partial<User>) => api.createUser(userData),
+    mutationFn: (userData: CreateUserInput) => api.createUser(userData),
     onSuccess: (newUser) => {
       // 사용자 목록 무효화하여 자동 refetch
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
@@ -60,7 +60,7 @@ export function useUpdateUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, userData }: { id: number; userData: Partial<User> }) =>
+    mutationFn: ({ id, userData }: { id: number; userData: UpdateUserInput }) =>
       api.updateUser(id, userData),
     onSuccess: (updatedUser, variables) => {
       // 특정 사용자 캐시 업데이트

@@ -1,18 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { User } from '@/lib/types';
+import { User, UpdateUserInput } from '@/lib/types';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import Link from 'next/link';
 import { useUser, useUserPosts, useUpdateUser, useDeleteUser } from '@/lib/hooks';
+
+function userToUpdateUserInput(user: User): UpdateUserInput {
+  return {
+    name: user.name,
+    username: user.username,
+    email: user.email,
+    age: user.age ?? undefined,
+    phone: user.phone ?? undefined,
+    website: user.website ?? undefined,
+    street: user.street ?? undefined,
+    suite: user.suite ?? undefined,
+    city: user.city ?? undefined,
+    zipcode: user.zipcode ?? undefined,
+    companyName: user.companyName ?? undefined,
+    companyCatchPhrase: user.companyCatchPhrase ?? undefined,
+    companyBs: user.companyBs ?? undefined,
+  };
+}
 
 export default function UserDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const userId = parseInt(params.id);
   
   const [isEditing, setIsEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState<Partial<User>>({});
+  const [editedUser, setEditedUser] = useState<UpdateUserInput>({});
 
   // React Query 훅 사용
   const { data: user, isLoading: userLoading } = useUser(userId);
@@ -21,9 +39,12 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
   const deleteUserMutation = useDeleteUser();
 
   // user 데이터가 로드되면 editedUser 초기화
-  if (user && !isEditing && Object.keys(editedUser).length === 0) {
-    setEditedUser(user);
-  }
+  useEffect(() => {
+    if (!user) return;
+    if (isEditing) return;
+    if (Object.keys(editedUser).length > 0) return;
+    setEditedUser(userToUpdateUserInput(user));
+  }, [user, isEditing, editedUser]);
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,7 +124,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               <button
                 onClick={() => {
                   setIsEditing(false);
-                  setEditedUser(user);
+                  setEditedUser(userToUpdateUserInput(user));
                 }}
                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors"
               >
@@ -160,7 +181,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               <label className="block text-sm font-medium text-gray-700 mb-1">이름</label>
               <input
                 type="text"
-                value={editedUser.name || ''}
+                value={editedUser.name ?? ''}
                 onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
@@ -170,7 +191,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               <label className="block text-sm font-medium text-gray-700 mb-1">사용자명</label>
               <input
                 type="text"
-                value={editedUser.username || ''}
+                value={editedUser.username ?? ''}
                 onChange={(e) => setEditedUser({ ...editedUser, username: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
@@ -180,7 +201,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               <label className="block text-sm font-medium text-gray-700 mb-1">이메일</label>
               <input
                 type="email"
-                value={editedUser.email || ''}
+                value={editedUser.email ?? ''}
                 onChange={(e) => setEditedUser({ ...editedUser, email: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
@@ -190,7 +211,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               <label className="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
               <input
                 type="tel"
-                value={editedUser.phone || ''}
+                value={editedUser.phone ?? ''}
                 onChange={(e) => setEditedUser({ ...editedUser, phone: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               />

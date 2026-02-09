@@ -8,6 +8,8 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // Vercel Postgres 등에서 마이그레이션용 direct 연결을 분리할 때 사용
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
