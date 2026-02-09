@@ -18,6 +18,7 @@ model User {
   username  String   @unique
   email     String   @unique
   age       String?
+  gender    String?  @default("female")
   phone     String?
   website   String?
   street    String?
